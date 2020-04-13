@@ -103,6 +103,9 @@ def run_system(system):
 
     def update_repulsion(new_value):
         system.repulsion_coefficient = new_value
+
+    def update_attraction(new_value):
+        system.attraction_coefficient = new_value
     
     def update_friction(new_value):
         system.friction_coefficient = new_value
@@ -110,10 +113,12 @@ def run_system(system):
     # Initialize elements
     fps_indicator = Text((2, 2), '')
     repulsion_editor = ValueEditor((2, 50), 'Repulsion', system.repulsion_coefficient, lambda v: update_repulsion(v))
-    friction_editor = ValueEditor((2, repulsion_editor.rect.bottom + 10), 'Friction', system.friction_coefficient, lambda v: update_friction(v))
+    attraction_editor = ValueEditor((2, repulsion_editor.rect.bottom + 10), 'Attraction', system.attraction_coefficient, lambda v: update_attraction(v))
+    friction_editor = ValueEditor((2, attraction_editor.rect.bottom + 10), 'Friction', system.friction_coefficient, lambda v: update_friction(v))
     elements = [
         fps_indicator,
         repulsion_editor,
+        attraction_editor,
         friction_editor
     ]
     element_selected = None
@@ -229,15 +234,3 @@ def run_system(system):
 
         # step system
         system.step(TIMESTEP_PER_FRAME)
-
-
-if __name__ == '__main__':
-    # a, b, c = Body((3, 3), 1), Body((5, 4), 3), Body((4, 1), 1)
-    # test_system = System(
-    #     [a, b, c],
-    #     [Spring((a, b), 3, 1, 0.2), Spring((b, c), 1, 1, 0.1)]
-    # )
-
-    test_system = System.random(100, 120)
-
-    run_system(test_system)

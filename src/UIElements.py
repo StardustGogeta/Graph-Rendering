@@ -86,7 +86,7 @@ class ValueEditor(UIElement):
     button_dims = (30, 15)
     padding = 2
 
-    def __init__(self, pos, label, initial_value, on_value_changed, factor=1.1):
+    def __init__(self, pos, label, initial_value, on_value_changed, factor=1.3):
         self.pos = pos
         self.current_value = initial_value
         self.on_value_changed = on_value_changed

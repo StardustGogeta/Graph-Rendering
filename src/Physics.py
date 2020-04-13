@@ -9,6 +9,7 @@ AGITATION_MAGNITUDE = 1
 # Initial Values
 FRICTION_COEFFICIENT = 0.1
 REPULSION_COEFFICIENT = 0.1
+ATTRACTION_COEFFICIENT = 0
 
 
 class Body:
@@ -85,6 +86,7 @@ class System:
         self.springs = springs
         self.repulsion_coefficient = REPULSION_COEFFICIENT
         self.friction_coefficient = FRICTION_COEFFICIENT
+        self.attraction_coefficient = ATTRACTION_COEFFICIENT
     
     def get_bodies_at(self, pos):
         return [b for b in self.bodies if (pos - b.pos).length() <= b.radius]
@@ -117,8 +119,12 @@ class System:
                 a, b = self.bodies[i], self.bodies[j]
                 disp = a.pos - b.pos
                 force = disp * (a.charge * b.charge / disp.length_squared()) * self.repulsion_coefficient
-                a.apply_impulse(force, timestep)
-                b.apply_impulse(-force, timestep)
+                # Custom addition: a first-order attractive force to prevent explosive expansion
+                force2 = -force * disp.length() * self.attraction_coefficient
+
+                net_force = force + force2
+                a.apply_impulse(net_force, timestep)
+                b.apply_impulse(-net_force, timestep)
 
         for b in self.bodies:
             friction = b.vel * b.mass * -self.friction_coefficient   # use b.vel.normalize() for absolute friction
