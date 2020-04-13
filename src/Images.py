@@ -3,7 +3,7 @@ import pygame.image
 
 ASSETS_PATH = os.path.join(
     os.path.dirname(os.path.realpath(__file__)),
-    'assets'
+    '../assets'
 )
 
 def load_image(filename):
