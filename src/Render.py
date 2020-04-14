@@ -69,7 +69,7 @@ def render_system(system, viewport, img):
         start = pos_to_render_pos(s.endpoints[0].pos)
         end = pos_to_render_pos(s.endpoints[1].pos)
         draw_width = max(2, round(s.k * pixels_per_meter / 60))
-        draw_aaline(img, start, end, BLACK, width=draw_width)
+        draw_aa_arrow(img, start, end, BLACK, width=draw_width, offset=s.endpoints[1].radius * pixels_per_meter)
     
     # bodies
     label_padding = 8
