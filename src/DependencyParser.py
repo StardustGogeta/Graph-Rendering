@@ -46,7 +46,7 @@ def parse(text, *, friction = 0.2, repulsion = 0.1, spring_length = 0.25, spring
                 tail = find_body_by_name(bodies, tailName)
 
             print(f"Spring between {headName} and {tailName}")
-            springs.append(Physics.Spring((head, tail), spring_length, spring_constant, damping))
+            springs.append(Physics.Spring((tail, head), spring_length, spring_constant, damping))
     
     # Generate and return the system
     system = Physics.System(bodies, springs)
